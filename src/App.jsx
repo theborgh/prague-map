@@ -8,31 +8,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchInput: '',
+      searchInput: 'sdfsg',
       isSidebarVisible: false,
     }
   }
 
   toggleSidebar = () => {
-    this.setState(prevState => ({showSidebar: !prevState.showSidebar}))
+    this.setState(prevState => ({ isSidebarVisible: !prevState.isSidebarVisible }))
   }
 
-  updateSearchInput = newInput => {
-    this.setState({searchInput: newInput});
+  updateSearchInput = event => {
+    this.setState({ searchInput: event.target.value });
   }
 
   render() {
+    const { isSidebarVisible, searchInput } = this.state;
     return (
       <div className="App">
-        Prague-map
         <SidebarToggle
-          onClick={this.toggleSidebar}
+          toggle={this.toggleSidebar}
         />
-        <Sidebar 
-          visible={this.isSidebarVisible}
-          searchInput={this.searchInput}
-          onSearchBoxUpdate={this.updateSearchInput}
-        />
+        {
+          isSidebarVisible ?
+            <Sidebar
+              searchInput={searchInput}
+              onSearchBoxUpdate={this.updateSearchInput}
+          
+            /> : null
+        }
+
         <Map
           searchInput={this.searchInput}
         />

@@ -2,18 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Sidebar.css';
 
-const Sidebar = ({ visible, searchInput, onSearchboxUpdate }) => {
+const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
   Sidebar.propTypes = {
-    visible: PropTypes.bool.isRequired,
     searchInput: PropTypes.string.isRequired,
-    onSearchboxUpdate: PropTypes.func.isRequired,
+    onSearchBoxUpdate: PropTypes.func.isRequired,
   };
 
   return (
     <div className="sidebar">
-      {
-        visible ? Sidebar : null
-      }
+      <h3 className="sidebar--title">Prague map</h3>
+      <input
+        className="sidebar--input"
+        type="text"
+        value={searchInput}
+        onChange={onSearchBoxUpdate}
+      />
+      <div id="sidebar--results">[List of results]</div>
     </div>
   );
 };
