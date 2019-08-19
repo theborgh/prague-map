@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import SidebarToggle from './components/SidebarToggle/SidebarToggle';
 import Sidebar from './components/Sidebar/Sidebar';
 import Map from './components/Map/Map';

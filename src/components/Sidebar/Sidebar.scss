@@ -5,4 +5,20 @@
   width: 12rem;
   height: 20rem;
   margin-left: .5rem;
+  border-radius: 5px;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__input {
+
+  }
+
+  &__results {
+
+    &::after {
+      // hr
+    }
+  }
 }

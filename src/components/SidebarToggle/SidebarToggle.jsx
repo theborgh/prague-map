@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
-import './SidebarToggle.css';
+import './SidebarToggle.scss';
 
 const SidebarToggle = ({ toggle }) => {
   SidebarToggle.propTypes = {

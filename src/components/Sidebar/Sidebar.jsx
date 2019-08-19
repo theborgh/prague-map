@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Sidebar.css';
+import './Sidebar.scss';
 
 const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
   Sidebar.propTypes = {
@@ -10,14 +10,14 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
 
   return (
     <div className="sidebar">
-      <h3 className="sidebar--title">Prague map</h3>
+      <h3 className="sidebar__title">Prague's Parks</h3>
       <input
-        className="sidebar--input"
+        className="sidebar__input"
         type="text"
         value={searchInput}
         onChange={onSearchBoxUpdate}
       />
-      <div id="sidebar--results">[List of results]</div>
+      <div className="sidebar__results">[List of results]</div>
     </div>
   );
 };
