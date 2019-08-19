@@ -11,8 +11,8 @@ const parks = [
     },
     {
       name: "Letna",
-      latitude: 50.0951,
-      longitude: 14.4085,
+      latitude: 50.0956,
+      longitude: 14.4173,
     },
     {
       name: "Petrin",

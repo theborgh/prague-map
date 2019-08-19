@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Sidebar.scss';
+import parks from '../../parks';
 
 const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
   Sidebar.propTypes = {
@@ -17,7 +18,12 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
         value={searchInput}
         onChange={onSearchBoxUpdate}
       />
-      <div className="sidebar__results">[List of results]</div>
+      <div className="sidebar__results">
+        {
+          parks.map(park =>
+            <div><div className="sidebar__park-name">{park.name}</div><hr></hr></div>)
+        }
+      </div>
     </div>
   );
 };

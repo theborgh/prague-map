@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Map.scss';
-import parks from './parks';
+import parks from '../../parks';
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
@@ -14,15 +14,14 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    this.createMap();
-
-    parks.forEach(park => console.log(park.name, park.latitude, park.longitude))
+    const pragueMap = this.createMap();
+    this.addParksToMap(pragueMap);
   }
   
   createMap = () => {
     mapboxgl.accessToken = 'pk.eyJ1IjoianJhYmJpdGUiLCJhIjoiY2p6NHF1ODNwMDIwZTNucWwyMG1wdWtoYiJ9.7whEfiHYWiNfnoGlkurT2g';
     const bounds = [[14.2, 50.0], [14.6, 50.2]]; // W, S, E, N
-    const pragueMap = new mapboxgl.Map({
+    return new mapboxgl.Map({
       container: 'map',
       center: [14.40, 50.08], // starting position [lng, lat]
       zoom: 11, // starting zoom
@@ -33,6 +32,14 @@ class Map extends Component {
       maxBounds: bounds,
     });
   }
+
+  addParksToMap = map => {
+    parks.forEach(park => {
+      new mapboxgl.Marker()
+        .setLngLat([park.longitude, park.latitude])
+        .addTo(map)
+    })
+  } 
 
   render() {
     return (
