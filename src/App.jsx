@@ -1,48 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import SidebarToggle from './components/SidebarToggle/SidebarToggle';
 import Sidebar from './components/Sidebar/Sidebar';
 import Map from './components/Map/Map';
+import parks from './parks';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchInput: 'sdfsg',
-      isSidebarVisible: false,
-    }
+const App = () => {
+  const [searchInput, setSearchInput] = useState('');
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [markers, setMarkers] = useState(null);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
   }
 
-  toggleSidebar = () => {
-    this.setState(prevState => ({ isSidebarVisible: !prevState.isSidebarVisible }))
-  }
+  const onSearchBoxUpdate = event => {
+    setSearchInput(event.target.value);
+    setMarkers(filterMarkers(event.target.value));
 
-  updateSearchInput = event => {
-    this.setState({ searchInput: event.target.value });
-  }
+    console.log(markers);
+  };
 
-  render() {
-    const { isSidebarVisible, searchInput } = this.state;
-    return (
-      <div className="App">
-        <SidebarToggle
-          toggle={this.toggleSidebar}
-        />
-        {
-          isSidebarVisible ?
-            <Sidebar
-              searchInput={searchInput}
-              onSearchBoxUpdate={this.updateSearchInput}
-          
-            /> : null
-        }
+  const filterMarkers = (filterString) => {
+    return parks.filter(park =>
+      park.name.toLowerCase().includes(filterString.toLowerCase()));
 
-        <Map
-          searchInput={this.searchInput}
-        />
-      </div>
-    );
-  }
+  };
+
+  return (
+    <div className="App">
+      <SidebarToggle
+        toggle={toggleSidebar}
+      />
+      {
+        isSidebarVisible ?
+          <Sidebar
+            searchInput={searchInput}
+            markers={markers}
+            onSearchBoxUpdate={onSearchBoxUpdate}
+
+          /> : null
+      }
+
+      <Map
+        searchInput={searchInput}
+        markers={markers}
+      />
+    </div>
+  );
 }
 
 export default App;

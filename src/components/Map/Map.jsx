@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Map.scss';
 import parks from '../../parks';
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
-class Map extends Component {
-  constructor(props) {
-    super(props);
-    const { searchInput } = this.props;
-    this.state = {
-      searchInput,
-    };
-  }
+const Map = ({ searchInput, markers }) => {
+  let map = useRef(null);
 
-  componentDidMount() {
-    const pragueMap = this.createMap();
-    this.addParksToMap(pragueMap);
-  }
-  
-  createMap = () => {
+  useEffect(() => {
+    map.current = createMap();
+  }, []);
+
+  useEffect(() => {
+    addFilteredParksToMap(searchInput, markers);
+  }, [searchInput, markers]);
+
+  const createMap = () => {
     mapboxgl.accessToken = 'pk.eyJ1IjoianJhYmJpdGUiLCJhIjoiY2p6NHF1ODNwMDIwZTNucWwyMG1wdWtoYiJ9.7whEfiHYWiNfnoGlkurT2g';
     const bounds = [[14.2, 50.0], [14.6, 50.2]]; // W, S, E, N
+
     return new mapboxgl.Map({
       container: 'map',
       center: [14.40, 50.08], // starting position [lng, lat]
@@ -33,20 +31,21 @@ class Map extends Component {
     });
   }
 
-  addParksToMap = map => {
+  const addFilteredParksToMap = (searchInput, markers) => {
     parks.forEach(park => {
-      new mapboxgl.Marker()
-        .setLngLat([park.longitude, park.latitude])
-        .addTo(map)
+      if (park.name.toLowerCase().includes(searchInput.toLowerCase())) {
+        new mapboxgl.Marker()
+          .setLngLat([park.longitude, park.latitude])
+          .addTo(map.current)
+      }
     })
-  } 
+  }
 
-  render() {
-    return (
-      <div id="map">
-      </div>
-    );
-    }
+  return (
+    <div id="map">
+    </div>
+  );
+
 };
 
 export default Map;

@@ -11,7 +11,7 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
 
   return (
     <div className="sidebar">
-      <h3 className="sidebar__title">Prague's Parks</h3>
+      <h3 className="sidebar__title">Prague&apos;s Parks</h3>
       <input
         className="sidebar__input"
         type="text"
@@ -20,9 +20,13 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
       />
       <div className="sidebar__results">
         {
-          parks.map(park =>
-            <div><div className="sidebar__park-name">{park.name}</div><hr></hr></div>)
-        }
+          parks
+            .filter(park => park.name.toLowerCase().includes(searchInput.toLowerCase()))
+            .map((filteredPark, i) => (
+              <div key={i}>
+                <div className="sidebar__park-name">{filteredPark.name}</div><hr></hr>
+              </div>
+            ))}
       </div>
     </div>
   );

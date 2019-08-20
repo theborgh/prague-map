@@ -21,6 +21,6 @@
         "react"
     ],
     "rules": {
-        "react/self-closing-comp": 0,
+        "react/self-closing-comp": 0
     }
 }
