@@ -8,7 +8,7 @@ import parks from './parks';
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const [markers, setMarkers] = useState(null);
+  const [visibleParks, setVisibleParks] = useState(parks);
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -16,15 +16,21 @@ const App = () => {
 
   const onSearchBoxUpdate = event => {
     setSearchInput(event.target.value);
-    setMarkers(filterMarkers(event.target.value));
-
-    console.log(markers);
+    setVisibleParks(filterMarkers(event.target.value));
   };
 
   const filterMarkers = (filterString) => {
-    return parks.filter(park =>
-      park.name.toLowerCase().includes(filterString.toLowerCase()));
+    let tmpMarkers = parks;
+    
+    tmpMarkers.forEach(marker => {
+      if (marker.name.toLowerCase().includes(filterString.toLowerCase())) {
+        marker.isVisible = true;
+      } else {
+        marker.isVisible = false;
+      }
+    });
 
+    return tmpMarkers.filter(marker => marker.isVisible);
   };
 
   return (
@@ -36,15 +42,13 @@ const App = () => {
         isSidebarVisible ?
           <Sidebar
             searchInput={searchInput}
-            markers={markers}
             onSearchBoxUpdate={onSearchBoxUpdate}
-
+            visibleParks={visibleParks}
           /> : null
       }
 
       <Map
-        searchInput={searchInput}
-        markers={markers}
+        visibleParks={visibleParks}
       />
     </div>
   );

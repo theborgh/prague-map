@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Sidebar.scss';
-import parks from '../../parks';
 
-const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
+const Sidebar = ({ searchInput, onSearchBoxUpdate, visibleParks }) => {
   Sidebar.propTypes = {
     searchInput: PropTypes.string.isRequired,
     onSearchBoxUpdate: PropTypes.func.isRequired,
+    visibleParks: PropTypes.array.isRequired,
   };
 
   return (
@@ -20,8 +20,7 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate }) => {
       />
       <div className="sidebar__results">
         {
-          parks
-            .filter(park => park.name.toLowerCase().includes(searchInput.toLowerCase()))
+          visibleParks
             .map((filteredPark, i) => (
               <div key={i}>
                 <div className="sidebar__park-name">{filteredPark.name}</div><hr></hr>

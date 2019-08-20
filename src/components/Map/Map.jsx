@@ -1,19 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Map.scss';
-import parks from '../../parks';
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
-const Map = ({ searchInput, markers }) => {
+const Map = ({ visibleParks }) => {
   let map = useRef(null);
+  const [visibleMarkers, setVisibleMarkers] = useState([]);
 
   useEffect(() => {
     map.current = createMap();
   }, []);
 
   useEffect(() => {
-    addFilteredParksToMap(searchInput, markers);
-  }, [searchInput, markers]);
+    updateMarkers(visibleParks);
+  }, [visibleParks]);
 
   const createMap = () => {
     mapboxgl.accessToken = 'pk.eyJ1IjoianJhYmJpdGUiLCJhIjoiY2p6NHF1ODNwMDIwZTNucWwyMG1wdWtoYiJ9.7whEfiHYWiNfnoGlkurT2g';
@@ -31,14 +31,22 @@ const Map = ({ searchInput, markers }) => {
     });
   }
 
-  const addFilteredParksToMap = (searchInput, markers) => {
-    parks.forEach(park => {
-      if (park.name.toLowerCase().includes(searchInput.toLowerCase())) {
+  const updateMarkers = (visibleParks) => {
+    visibleMarkers.forEach(marker => {
+      marker.remove();
+    });
+    
+    let tmp = [];
+    visibleParks.forEach(park => {
+      tmp.push(
         new mapboxgl.Marker()
           .setLngLat([park.longitude, park.latitude])
           .addTo(map.current)
-      }
+      );
+
     })
+
+    setVisibleMarkers(tmp);
   }
 
   return (
