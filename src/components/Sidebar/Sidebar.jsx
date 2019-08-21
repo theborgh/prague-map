@@ -17,6 +17,7 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate, visibleParks }) => {
         type="text"
         value={searchInput}
         onChange={onSearchBoxUpdate}
+        placeholder="Enter search term..."
       />
       <div className="sidebar__results">
         {

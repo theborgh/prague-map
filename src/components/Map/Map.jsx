@@ -16,7 +16,7 @@ const Map = ({ visibleParks }) => {
   }, [visibleParks]);
 
   const createMap = () => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoianJhYmJpdGUiLCJhIjoiY2p6NHF1ODNwMDIwZTNucWwyMG1wdWtoYiJ9.7whEfiHYWiNfnoGlkurT2g';
+    mapboxgl.accessToken = process.env.apiKey;
     const bounds = [[14.2, 50.0], [14.6, 50.2]]; // W, S, E, N
 
     return new mapboxgl.Map({
