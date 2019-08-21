@@ -1,5 +1,3 @@
-# Prague Map
-
 # Prague Parks
 
 A map of Prague's natural parks using the Mapbox API.
