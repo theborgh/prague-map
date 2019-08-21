@@ -35,6 +35,12 @@ const parks = [
       longitude: 14.4595,
       isVisible: true,
     },
+    {
+      name: "Prague Zoo",
+      latitude: 50.1165,
+      longitude: 14.4069,
+      isVisible: true,
+    },
 ];
 
 export default parks;

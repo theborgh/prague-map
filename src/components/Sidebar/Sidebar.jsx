@@ -22,9 +22,8 @@ const Sidebar = ({ searchInput, onSearchBoxUpdate, visibleParks }) => {
         {
           visibleParks
             .map((filteredPark, i) => (
-              <div key={i}>
-                <div className="sidebar__park-name">{filteredPark.name}</div><hr></hr>
-              </div>
+              <div className="sidebar__results" key={i}>
+                {filteredPark.name}</div>
             ))}
       </div>
     </div>
