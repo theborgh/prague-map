@@ -6,3 +6,7 @@
   height: 100vh;
   z-index: -1;
 }
+
+.mapboxgl-popup {
+  max-width: 200px;
+}

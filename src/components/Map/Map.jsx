@@ -38,9 +38,12 @@ const Map = ({ visibleParks }) => {
     
     let tmp = [];
     visibleParks.forEach(park => {
+      let popup = new mapboxgl.Popup({ offset: 25 })
+        .setText(park.name); 
       tmp.push(
         new mapboxgl.Marker()
           .setLngLat([park.longitude, park.latitude])
+          .setPopup(popup)
           .addTo(map.current)
       );
 
