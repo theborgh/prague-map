@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Map.scss';
-
-const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+import mapboxgl from 'mapbox-gl';
 
 const Map = ({ visibleParks }) => {
   let map = useRef(null);

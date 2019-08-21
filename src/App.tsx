@@ -14,12 +14,12 @@ const App = () => {
     setIsSidebarVisible(!isSidebarVisible);
   }
 
-  const onSearchBoxUpdate = event => {
+  const onSearchBoxUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
     setVisibleParks(filterMarkers(event.target.value));
   };
 
-  const filterMarkers = (filterString) => {
+  const filterMarkers = (filterString: string) => {
     let tmpMarkers = parks;
     
     tmpMarkers.forEach(marker => {
