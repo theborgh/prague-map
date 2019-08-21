@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Map.scss';
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
@@ -11,9 +11,33 @@ const Map = ({ visibleParks }) => {
     map.current = createMap();
   }, []);
 
+  const memoizedUpdateMarkers = useCallback(
+    () => {
+      visibleMarkers.forEach(marker => {
+        marker.remove();
+      });
+      
+      let tmp = [];
+      visibleParks.forEach(park => {
+        let popup = new mapboxgl.Popup({ offset: 25 })
+          .setText(park.name); 
+        tmp.push(
+          new mapboxgl.Marker()
+            .setLngLat([park.longitude, park.latitude])
+            .setPopup(popup)
+            .addTo(map.current)
+        );
+  
+      })
+  
+      setVisibleMarkers(tmp);
+    },
+    [visibleParks, visibleMarkers],
+  )
+
   useEffect(() => {
-    updateMarkers(visibleParks);
-  }, [visibleParks]);
+    memoizedUpdateMarkers(visibleParks);
+  }, [visibleParks, memoizedUpdateMarkers]);
 
   const createMap = () => {
     mapboxgl.accessToken = 'pk.eyJ1IjoianJhYmJpdGUiLCJhIjoiY2p6NHF1ODNwMDIwZTNucWwyMG1wdWtoYiJ9.7whEfiHYWiNfnoGlkurT2g';
@@ -29,27 +53,6 @@ const Map = ({ visibleParks }) => {
       hash: true,
       maxBounds: bounds,
     });
-  }
-
-  const updateMarkers = (visibleParks) => {
-    visibleMarkers.forEach(marker => {
-      marker.remove();
-    });
-    
-    let tmp = [];
-    visibleParks.forEach(park => {
-      let popup = new mapboxgl.Popup({ offset: 25 })
-        .setText(park.name); 
-      tmp.push(
-        new mapboxgl.Marker()
-          .setLngLat([park.longitude, park.latitude])
-          .setPopup(popup)
-          .addTo(map.current)
-      );
-
-    })
-
-    setVisibleMarkers(tmp);
   }
 
   return (
